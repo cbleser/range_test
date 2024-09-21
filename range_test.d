@@ -18,8 +18,15 @@ class List(T) {
         head = new Element(head, x);
     }
 
-    final Range opSlice() pure nothrow @nogc {
-        return Range(this);
+    version(FINAL) {
+        final Range opSlice() pure nothrow @nogc {
+            return Range(this);
+        }
+    }
+    else {
+        Range opSlice() pure nothrow @nogc {
+            return Range(this);
+        }
     }
 
     @nogc
@@ -44,43 +51,10 @@ class List(T) {
     }
 }
 
-/* The range version compiles to 
-pure nothrow @nogc @safe int example.range_sum(example.List!(int).List):
-        push    rax
-        mov     rax, qword ptr [rdi]
-        call    qword ptr [rax + 48]
-        xor     ecx, ecx
-        test    rax, rax
-        je      .LBB0_3
-.LBB0_1:
-        add     ecx, dword ptr [rax + 8]
-        mov     rax, qword ptr [rax]
-        test    rax, rax
-        jne     .LBB0_1
-.LBB0_3:
-        mov     eax, ecx
-        pop     rcx
-        ret
-*/
 int range_sum(List!int l)  nothrow @nogc {
     return l[].sum;
 }
 
-/* This for version compiles to
-pure nothrow @nogc @safe int example.for_sum(example.List!(int).List):
-        mov     rcx, qword ptr [rdi + 16]
-        xor     eax, eax
-        test    rcx, rcx
-        je      .LBB3_3
-.LBB3_1:
-        add     eax, dword ptr [rcx + 8]
-        mov     rcx, qword ptr [rcx]
-        test    rcx, rcx
-        jne     .LBB3_1
-.LBB3_3:
-        ret
-
-*/
 int for_sum(List!int l)  nothrow @nogc {
     List!(int).Element* c;
     int result;
@@ -107,8 +81,7 @@ void main() {
         for_sum(l);
     }
     auto r = benchmark!(range_test, for_test)(number_of_tests);
-    writefln("benchmark size = %s", r.length);
-     writefln("benchmark range test = %s", r[0]);
+    writefln("benchmark range test = %s", r[0]);
     writefln("benchmark for test   = %s", r[1]);
 
 }

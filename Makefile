@@ -1,22 +1,41 @@
+.SUFFIXES:
+.ONESHELL:
+
+EMPTY=
+SPACE=$(EMPTY) $(EMPTY)
+ifdef ENV
+PRECMD=@echo$(SPACE)
+run: env
+else
+PRECMD=@
+endif
+
 DC?=$(shell which ldc2)
 
-BIN:=./
+BIN:=.
 MAIN:=range_test
 
 DFILES+=$(addsuffix .d,$(MAIN))
 
 DFLAGS+=-preview=dip1000
 
-all:
-	@$(DC) $(DFLAGS) $(DFILES)
+run-final-o: DFLAGS+=-O3
+run-final: DFLAGS+=--d-version=FINAL
 
+run-final-o: run-final
+
+run-final: run
+
+all:
+	$(PRECMD)$(DC) $(DFLAGS) $(DFILES)
 
 run: all
-	$(BIN)/$(MAIN)
+	$(PRECMD)$(BIN)/$(MAIN)
 
 
 env:
 	@echo DFILES=$(DFILES)
+	@echo DFLAGS=$(DFLAGS)
 
 clean:
 	rm -f $(MAIN)
