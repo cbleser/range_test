@@ -1,14 +1,14 @@
 # Phobos range test
 
-This is simple program to the zero cost range using the Phobos v2.
+This simple program to test the zero cost range using the Phobos v2.
 
-The sample source can be found the `range_test.d` file in this repository.
+The sample source can be found in the `range_test.d` file in this repository.
 
-The test makes benchmark between a `for` loop and range using Phobos.
+The test makes a benchmark between a `for` loop and range using Phobos.
 
-The CUT (Code Under Test) is as simple pointer list with an inner Range which implements a InputRange.
+The CUT (Code Under Test) is a simple pointer list with an inner Range that implements a InputRange.
 
-The List is implemented as a class. The CUT can be compiler as an `FINAL` version or virtual version.
+The List is implemented as a class. The CUT can be compiled as an `FINAL` version or virtual version.
 
 ```d
     version(FINAL) {
@@ -27,7 +27,7 @@ The CUT can be run with the make tag `run, run-o, run-final, run-final-o`
 
 The sub-tag final means `vesion=FINAL` and the sub-tag `o` means that the CUT is compiled with optimizing.
 
-### First the tests are performed with dmd.
+### First, the tests are performed with dmd.
 
 1. CUT without optimizing and virtual opSlice function.
 ```sh
@@ -143,8 +143,7 @@ The benchmark results are listed below.
 
 It's clear to see that the virtual function opSlice in this case used is what takes up the time.
 
-For the test bench it can also be concluded if a final opSlice is used and instead and the code is compiled with ldc2 optimize with -O3 the range in this case has zero cost.
-
+For the test bench, it can also be concluded if a final opSlice is used and instead and the code is compiled with ldc2 optimized with \-O3 the range in this case has zero cost.
 
 ### This is the code produced by ldc2
 
@@ -189,8 +188,8 @@ nothrow @nogc @safe int example.for_sum(example.List!(int).List):
 ```
 So the only difference is the function call and the stack cleanup.
 
+*This code is produced with \-O3 and the final opSlice function.*
 
-*This is the code is compile with -O3 and final opSlice function.**
 
 
 ```asm
@@ -226,9 +225,7 @@ nothrow @nogc @safe int example.for_sum(example.List!(int).List):
         ret
 ```
 
-The code produced by ldc2 is in this case exactly the same.
 
-This means we have zero cost in this case.
+The code produced by ldc2 is in this case the same.
 
-
-
+This means we have zero cost in this case.  
