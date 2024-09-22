@@ -132,8 +132,8 @@ Reation 101.044%
 
 ## Conclusion
 
-|     | virtual | virtual-opt | final | final-opt |
-|:--- | ----: | ---: | ---: | ---: | ---: |:
+| X   | virtual | virtual-opt | final | final-opt |
+|:--- | ----: | ---: | ---: | ---: | ---: |
 |dmd  | 349.6%  | 148.0%      | 476.1% | 260.9%   | 
 |ldc2 | 260.9%  | 10370250%   | 253.1% | 101.0%   |   
 
