@@ -2,6 +2,7 @@
 // Type your code here, or load an example.
 import std.algorithm;
 import std.range;
+import std.conv;
 
 @safe:
 class List(T) {
@@ -71,9 +72,12 @@ void main() {
     enum number_of_elements=10_000;
     number_of_elements.iota.each!(n => l.add(n));
 
-    writefln("range sum = %d", range_sum(l));
-    writefln("for sum   = %d", for_sum(l));
-    enum number_of_tests = 10_000;
+    const range_result = range_sum(l);
+    const for_result = for_sum(l);
+    writefln("range sum = %d", range_result);
+    writefln("for sum   = %d", for_result);
+    assert(range_result == for_result, "The results should be the same");
+    enum number_of_tests = 1_000_000;
     void range_test() {
         range_sum(l);
     }
@@ -83,5 +87,8 @@ void main() {
     auto r = benchmark!(range_test, for_test)(number_of_tests);
     writefln("benchmark range test = %s", r[0]);
     writefln("benchmark for test   = %s", r[1]);
+    const range_dur =double(r[0].total!"nsecs");
+    const for_dur =double(r[1].total!"nsecs");
 
+    writefln("Reation %.3f%%", range_dur/for_dur*100);
 }
