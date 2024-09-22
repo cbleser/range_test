@@ -53,7 +53,7 @@ benchmark for test   = 9 secs, 569 ms, 864 μs, and 8 hnsecs
 Reation 427.560%
 ```
 
-3. CUT without optimizing and final opSilce function.
+3. CUT without optimizing and final opSlice function.
 ```sh
 make clean run-final DMD=1
 
@@ -141,14 +141,14 @@ The benchmark results are listed below.
 |ldc2 | 260.9%  | 10370250%   | 253.1% | 101.0%    |
 
 
-It's clear to see that the virtual function opSlice in this case used is what takes up the time.
+It's clear to see that the virtual function opSlice in what takes up the time.
 
 For the test bench, it can also be concluded if a final opSlice is used and instead and the code is compiled with ldc2 optimized with \-O3 the range in this case has zero cost.
 
 ### This is the code produced by ldc2
 
 
-*This code is the range_sum function with the virtual opSlice and we can see the virtual function.*
+*This code is the `range_sum` function with the virtual opSlice.*
 
 
 ```asm
@@ -170,7 +170,7 @@ nothrow @nogc @safe int example.range_sum(example.List!(int).List):
         ret
 ```
 
-This this for loop.
+This is the for loop.
 ```asm
 nothrow @nogc @safe int example.for_sum(example.List!(int).List):
         mov     rcx, qword ptr [rdi + 16]
@@ -186,7 +186,9 @@ nothrow @nogc @safe int example.for_sum(example.List!(int).List):
         ret
 
 ```
-So the only difference is the function call and the stack cleanup.
+
+So the only difference is the indirect function call and the stack cleanup.
+
 
 *This code is produced with \-O3 and the final opSlice function.*
 
@@ -209,8 +211,8 @@ nothrow @nogc @safe int example.range_sum(example.List!(int).List):
 ```
 
 This is the for loop
-```asm
 
+```asm
 nothrow @nogc @safe int example.for_sum(example.List!(int).List):
         mov     rcx, qword ptr [rdi + 16]
         xor     eax, eax
@@ -228,4 +230,4 @@ nothrow @nogc @safe int example.for_sum(example.List!(int).List):
 
 The code produced by ldc2 is in this case the same.
 
-This means we have zero cost in this case.  
+**This means we have zero cost in this case.**  
