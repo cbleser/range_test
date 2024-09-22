@@ -137,8 +137,8 @@ The benchmark results are listed below.
 
 | X   | virtual | virtual-opt | final  | final-opt |
 |:--- | ----:   | ---:        | ---:   | ---:      |
-|dmd  | 349.6%  | 148.0%      | 476.1% | 260.9%    |
-|ldc2 | 260.9%  | 10370250%   | 253.1% | 101.0%    |
+|dmd  | 159.8%  | 427.6%      | 427.6% | 147.1%    |
+|ldc2 | 252.9%  | 105391907.6%   | 207.4% | 101.0%    |
 
 
 It's clear to see that the virtual function opSlice in what takes up the time.
