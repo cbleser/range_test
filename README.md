@@ -137,7 +137,7 @@ The benchmark results are listed below.
 
 | X   | virtual | virtual-opt | final  | final-opt |
 |:--- | ----:   | ---:        | ---:   | ---:      |
-|dmd  | 159.8%  | 427.6%      | 427.6% | 147.1%    |
+|dmd  | 159.8%  | 427.6%      | 147.1% | 482.4%    |
 |ldc2 | 252.9%  | 105391907.6%   | 207.4% | 101.0%    |
 
 
